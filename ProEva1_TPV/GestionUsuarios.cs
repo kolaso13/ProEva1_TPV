@@ -128,10 +128,10 @@ namespace ProEva1_TPV
                     {
                         Microsoft.VisualBasic.Interaction.MsgBox("El usuario ya ha sido registrado previamente añada uno con un nombre diferente");
                     }
-
                 }
-
-
+                textBox1.Text = "";
+                textBox2.Text = "";
+                checkBox1.Checked = false;
             }
             else
             {
@@ -144,7 +144,7 @@ namespace ProEva1_TPV
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
             myCon.Open();
 
-            if (textBox5.Text.Trim().Length > 0 || textBox6.Text.Trim().Length > 0)
+            if (textBox6.Text.Trim().Length > 0)
             {
                 if (checkBox2.Checked)
                 {
@@ -158,13 +158,14 @@ namespace ProEva1_TPV
                 }
 
                 Microsoft.VisualBasic.Interaction.MsgBox("El usuario ha sido actualizado");
-                listBox1.Items.Add(textBox1.Text);
             }
             else
             {
                 Microsoft.VisualBasic.Interaction.MsgBox("Rellene todos los campos, para modificar el registro a la base de datos");
             }
 
+            textBox6.Text = "";
+            checkBox2.Checked = false;
         }
     }
 }
