@@ -57,5 +57,13 @@ namespace ProEva1_TPV
             Hide();
             new InicioSesion().Show();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MySqlConnection myCon = new MySqlConnection(cadenaConexion);
+            myCon.Open();
+            Hide();
+            new Reservas(rol, cadenaConexion).Show();
+        }
     }
 }

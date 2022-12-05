@@ -25,11 +25,6 @@ namespace ProEva1_TPV
             this.cadenaConexion = cadenaConexion;
         }
 
-        private void GestionProductos_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void button4_Click(object sender, EventArgs e)
         {
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
@@ -39,12 +34,7 @@ namespace ProEva1_TPV
             new Gestion(rol, cadenaConexion).Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void anyadir(object sender, EventArgs e)
         {
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
             myCon.Open();
@@ -56,12 +46,12 @@ namespace ProEva1_TPV
                 {
                     MySqlCommand sda = new MySqlCommand("INSERT INTO productos (Nombre, Precio, Stock) VALUES('" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "');", myCon);
                     sda.ExecuteReader();
-                    Microsoft.VisualBasic.Interaction.MsgBox("El usuario ha sido registrado");
+                    Microsoft.VisualBasic.Interaction.MsgBox("El producto ha sido registrado");
                     listBox1.Items.Add(textBox1.Text);
                 }
                 catch (Exception)
                 {
-                    Microsoft.VisualBasic.Interaction.MsgBox("El usuario ya ha sido registrado previamente añada uno con un nombre diferente");
+                    Microsoft.VisualBasic.Interaction.MsgBox("El producto ya ha sido registrado previamente añada uno con un nombre diferente");
                 }
             
                 textBox1.Text = "";
@@ -75,12 +65,7 @@ namespace ProEva1_TPV
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button4_Click_1(object sender, EventArgs e)
+        private void atras(object sender, EventArgs e)
         {
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
             myCon.Open();
@@ -119,7 +104,7 @@ namespace ProEva1_TPV
             }
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private void eliminar(object sender, EventArgs e)
         {
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
             myCon.Open();
@@ -149,7 +134,7 @@ namespace ProEva1_TPV
             }
         }
 
-        private void button3_Click_1(object sender, EventArgs e)
+        private void modificar(object sender, EventArgs e)
         {
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
             myCon.Open();

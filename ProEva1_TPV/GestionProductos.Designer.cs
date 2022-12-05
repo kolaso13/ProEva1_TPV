@@ -66,7 +66,7 @@
             this.button4.TabIndex = 9;
             this.button4.Text = "Atras";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click_1);
+            this.button4.Click += new System.EventHandler(this.atras);
             // 
             // groupBox4
             // 
@@ -94,7 +94,7 @@
             this.button3.TabIndex = 8;
             this.button3.Text = "Modificar";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            this.button3.Click += new System.EventHandler(this.modificar);
             // 
             // textBox7
             // 
@@ -173,7 +173,7 @@
             this.button2.TabIndex = 6;
             this.button2.Text = "Eliminar";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            this.button2.Click += new System.EventHandler(this.eliminar);
             // 
             // textBox4
             // 
@@ -219,7 +219,7 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "Añadir";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.anyadir);
             // 
             // label3
             // 
