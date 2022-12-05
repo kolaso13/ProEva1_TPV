@@ -9,13 +9,14 @@ namespace ProEva1_TPV
     internal class Producto
     {
         String Nombre;
-        int Cantidad;
+        int Cantidad, CantidadTotl;
         double Precio;
 
-        public Producto(string nombre, int cantidad, double precio)
+        public Producto(string nombre, int cantidad,int cantidadTotl, double precio)
         {
             Nombre = nombre;
             Cantidad = cantidad;
+            CantidadTotl = cantidadTotl;
             Precio = precio;
         }
 
@@ -26,6 +27,10 @@ namespace ProEva1_TPV
         public void setCantidad(int cantidad)
         {
             this.Cantidad = cantidad;
+        }
+        public void setCantidadTotl(int cantidadTotl)
+        {
+            this.CantidadTotl = cantidadTotl;
         }
         public void setPrecio(double precio)
         {
@@ -38,6 +43,10 @@ namespace ProEva1_TPV
         public int getCantidad()
         {
             return Cantidad;
+        }
+        public int getCantidadTotl()
+        {
+            return CantidadTotl;
         }
         public double getPrecio()
         {

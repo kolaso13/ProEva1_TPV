@@ -1,4 +1,6 @@
-﻿using MySqlConnector;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using MySqlConnector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,10 +8,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Document = iTextSharp.text.Document;
 
 namespace ProEva1_TPV
 {
@@ -18,8 +22,7 @@ namespace ProEva1_TPV
         string rol;
         string cadenaConexion;
         string SelectItem, SelectItemCart;
-        
-        ArrayList Listaproductos = new ArrayList();
+        ArrayList Cesta = new ArrayList();
         
 
         public Reservas(string rol, string cadenaConexion)
@@ -31,46 +34,27 @@ namespace ProEva1_TPV
 
         private void anyadir(object sender, EventArgs e)
         {
-            if(SelectItem != null)
+            MySqlConnection myCon = new MySqlConnection(cadenaConexion);
+            myCon.Open();
+
+            if (SelectItem != null)
             {
-                MySqlConnection myCon = new MySqlConnection(cadenaConexion);
-                myCon.Open();
-
-                MySqlDataAdapter sda = new MySqlDataAdapter("SELECT * FROM productos WHERE Nombre = '"+ SelectItem + "'", myCon);
-
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-
-                foreach (DataRow dr in dt.Rows)
+               foreach(Producto p in Cesta)
+               {
+                    if(SelectItem == p.getNombre() && p.getCantidadTotl()!=0)
+                    {
+                        listBox2.Items.Add(p.getNombre());
+                        p.setCantidad(p.getCantidad()+1);
+                        p.setCantidadTotl(p.getCantidadTotl() - 1);
+                    }
+                }
+                listBox1.Items.Clear();
+                foreach (Producto p in Cesta)
                 {
-                    int stock = (int)dr["Stock"];
-                    string nombre = (string)dr["Nombre"];
-                    double precio = (double)dr["Precio"];
-
-                    Producto producto = new Producto(nombre, stock, precio);
-                    Listaproductos.Add(producto);
-
-                    System.Diagnostics.Debug.WriteLine(dr["Stock"]);
-                    
-                    if (stock > 0)
+                    if (p.getCantidadTotl() != 0)
                     {
-
-                        MySqlCommand sda1 = new MySqlCommand("UPDATE productos SET Stock = '" + 1 + "' WHERE Nombre = '" + SelectItem + "'; ", myCon);
-                        sda1.ExecuteReader();
-                        if (!listBox2.Items.Contains(dr["Nombre"]))
-                        {
-                            listBox2.Items.Add(dr["Nombre"]);
-                        }
+                        listBox1.Items.Add(p.getNombre());
                     }
-                    else
-                    {
-                        for (int x = listBox1.SelectedIndices.Count - 1; x >= 0; x--)
-                        {
-                            int var = listBox1.SelectedIndices[x];
-                            listBox1.Items.RemoveAt(var);
-                        }
-                    }
-
                 }
             }
             else
@@ -81,49 +65,68 @@ namespace ProEva1_TPV
 
         private void eliminar(object sender, EventArgs e)
         {
+            MySqlConnection myCon = new MySqlConnection(cadenaConexion);
+            myCon.Open();
             if (SelectItemCart != null)
             {
-                MySqlConnection myCon = new MySqlConnection(cadenaConexion);
-                myCon.Open();
-
-                MySqlDataAdapter sda = new MySqlDataAdapter("SELECT * FROM productos WHERE Nombre = '" + SelectItemCart + "'", myCon);
-
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-
-                foreach (DataRow dr in dt.Rows)
+                foreach (Producto p in Cesta)
                 {
-                    System.Diagnostics.Debug.WriteLine(dr["Stock"]);
-                    int stock = (int)dr["Stock"];
-                    
-                    int sum = stock + 1;
-                    
-                    
-                    MySqlCommand sda1 = new MySqlCommand("UPDATE productos SET Stock = '" + sum + "' WHERE Nombre = '" + SelectItemCart + "'; ", myCon);
-                    sda1.ExecuteReader();
-
-                    if (!listBox1.Items.Contains(dr["Nombre"]))
+                    if(SelectItemCart == p.getNombre() && p.getCantidad() != 0)
                     {
-                        listBox1.Items.Add(dr["Nombre"]);
+                        if (!listBox1.Items.Contains(SelectItemCart))
+                        {
+                            listBox1.Items.Add(p.getNombre());
+                        }
+                        p.setCantidad(p.getCantidad() - 1);
+                        p.setCantidadTotl(p.getCantidadTotl() + 1);
+                        listBox2.Items.Remove(SelectItemCart);
                     }
                 }
             }
             else
             {
-                Microsoft.VisualBasic.Interaction.MsgBox("Seleccione un producto para añadirlo a la reserva");
+                Microsoft.VisualBasic.Interaction.MsgBox("Seleccione un producto para eliminarlo de la reserva");
             }
         }
 
         private void imprimir(object sender, EventArgs e)
         {
+            MySqlConnection myCon = new MySqlConnection(cadenaConexion);
+            foreach (Producto p in Cesta)
+            {
+                myCon.Open();
+                MySqlCommand sda = new MySqlCommand("UPDATE productos SET Stock = '" + p.getCantidadTotl() + "' WHERE Nombre = '" + p.getNombre() + "'; ", myCon);
+                sda.ExecuteReader();
+                myCon.Close();
+            }
 
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/ticket.pdf";
+
+            Document document = new Document();
+            FileStream fs = File.Create(path);
+            PdfWriter.GetInstance(document, fs);
+            document.Open();
+            double total = 0;
+            foreach (Producto p in Cesta)
+            {
+                if(p.getCantidad() != 0)
+                {
+                    document.Add(new Paragraph(p.getNombre() + " " + p.getCantidad() + " " + p.getPrecio()+ "€"));
+                    total +=  p.getCantidad() * p.getPrecio();
+                }
+                
+            }
+            
+            document.Add(new Paragraph("Total: "+ total));
+
+            document.Close();
+
+            Hide();
+            new Gestion(rol, cadenaConexion).Show();
         }
 
         private void atras(object sender, EventArgs e)
         {
-            MySqlConnection myCon = new MySqlConnection(cadenaConexion);
-            myCon.Open();
-
             Hide();
             new Gestion(rol, cadenaConexion).Show();
         }
@@ -132,7 +135,6 @@ namespace ProEva1_TPV
         {
             foreach (object item in listBox1.SelectedItems)
             {
-                System.Diagnostics.Debug.WriteLine(item);
                 SelectItem = (string)item;
             }
         }
@@ -149,24 +151,25 @@ namespace ProEva1_TPV
 
             foreach (DataRow dr in dt.Rows)
             {
-                System.Diagnostics.Debug.WriteLine(dr["Stock"]);
+                string nombre = (string)dr["Nombre"];
+                double precio = (double)dr["Precio"];
                 int stock = (int)dr["Stock"];
-
-                
-
-                if (stock > 0)
+                Cesta.Add(new Producto(nombre, 0, stock, precio));
+            }
+            foreach(Producto p in Cesta)
+            {
+                if(p.getCantidadTotl() != 0)
                 {
-                    listBox1.Items.Add(dr["Nombre"]);
+                    listBox1.Items.Add(p.getNombre());
                 }
-                
+               
             }
         }
 
         private void productosEnCesta(object sender, EventArgs e)
         {
-            foreach (object item in listBox1.SelectedItems)
+            foreach (object item in listBox2.SelectedItems)
             {
-                System.Diagnostics.Debug.WriteLine(item);
                 SelectItemCart = (string)item;
             }
         }
