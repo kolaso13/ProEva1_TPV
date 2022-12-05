@@ -42,7 +42,7 @@ namespace ProEva1_TPV
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void atras(object sender, EventArgs e)
         {
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
             myCon.Open();
@@ -64,7 +64,7 @@ namespace ProEva1_TPV
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void eliminar(object sender, EventArgs e)
         {
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
             myCon.Open();
@@ -94,7 +94,7 @@ namespace ProEva1_TPV
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void anyadir(object sender, EventArgs e)
         {
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
             myCon.Open();
@@ -139,7 +139,7 @@ namespace ProEva1_TPV
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void modificar(object sender, EventArgs e)
         {
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
             myCon.Open();

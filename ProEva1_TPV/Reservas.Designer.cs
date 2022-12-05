@@ -78,6 +78,7 @@
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(189, 394);
             this.listBox2.TabIndex = 0;
+            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.productosEnCesta);
             // 
             // button1
             // 
@@ -136,6 +137,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "Reservas";
             this.Text = "Reservas";
+            this.Load += new System.EventHandler(this.Reservas_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);

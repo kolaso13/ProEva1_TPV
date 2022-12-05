@@ -15,7 +15,7 @@ namespace ProEva1_TPV
     {
         string rol;
         string cadenaConexion;
-        public Gestion(string rol, string cadenaConexion)
+        public Gestion(string rol, string cadenaConexion )
         {
             this.rol = rol;
 
