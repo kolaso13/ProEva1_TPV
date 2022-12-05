@@ -66,6 +66,7 @@
             this.button4.TabIndex = 9;
             this.button4.Text = "Atras";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click_1);
             // 
             // groupBox4
             // 
@@ -93,6 +94,7 @@
             this.button3.TabIndex = 8;
             this.button3.Text = "Modificar";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // textBox7
             // 
@@ -132,6 +134,7 @@
             // 
             // textBox6
             // 
+            this.textBox6.Enabled = false;
             this.textBox6.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textBox6.Location = new System.Drawing.Point(148, 56);
             this.textBox6.Name = "textBox6";
@@ -170,9 +173,11 @@
             this.button2.TabIndex = 6;
             this.button2.Text = "Eliminar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // textBox4
             // 
+            this.textBox4.Enabled = false;
             this.textBox4.Location = new System.Drawing.Point(223, 40);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(100, 32);
@@ -287,6 +292,7 @@
             this.listBox1.ScrollAlwaysVisible = true;
             this.listBox1.Size = new System.Drawing.Size(156, 379);
             this.listBox1.TabIndex = 0;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // GestionProductos
             // 
@@ -300,6 +306,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "GestionProductos";
             this.Text = "GestionProductos";
+            this.Load += new System.EventHandler(this.GestionProductos_Load_1);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
