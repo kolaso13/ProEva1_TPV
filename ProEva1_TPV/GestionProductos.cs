@@ -25,15 +25,6 @@ namespace ProEva1_TPV
             this.cadenaConexion = cadenaConexion;
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            MySqlConnection myCon = new MySqlConnection(cadenaConexion);
-            myCon.Open();
-
-            Hide();
-            new Gestion(rol, cadenaConexion).Show();
-        }
-
         private void anyadir(object sender, EventArgs e)
         {
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);

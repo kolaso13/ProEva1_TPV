@@ -25,11 +25,6 @@ namespace ProEva1_TPV
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string server = "localhost";
-            string database = "TPV";
-            string user = "root";
-            string pwd = "admin";
-            string cadenaConexion = "server=" + server + ";database=" + database + ";" + "Uid=" + user + ";pwd=" + pwd + ";";
             MySqlConnection myCon = new MySqlConnection(cadenaConexion);
             myCon.Open();
             Hide();
